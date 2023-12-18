@@ -10,7 +10,7 @@ function AdminHome() {
         <div className="p-2 m-2 w-50">
           <h5>Update Product Status </h5>
           <div>
-            <a className="icon-a icon-a-hover fw-semibold" href="/admin/add-item">
+            <a className="icon-a icon-a-hover fw-semibold" href="/InsertBook">
               <i className="fa-solid fa-book"></i>
               Add New Book
             </a>

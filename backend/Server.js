@@ -162,14 +162,14 @@ app.post("/update-items-qty", async (req, res) => {
   })
 })
 app.post("/place-order", async (req, res) => {
-  const { itemId, qty, userId } = req.body
+  const { itemId, qty, username } = req.body
 
-  console.log(itemId)
+  console.log(username)
   console.log(qty)
   //Hash the Password
 
-  const sql = "INSERT INTO orders (userId, itemId,qty) VALUES (?, ? ,?)"
-  db.query(sql, [userId, itemId, qty], (err, result) => {
+  const sql = "INSERT INTO orders (username, itemId,qty, status) VALUES (?, ? ,? , 'Not yet ship')"
+  db.query(sql, [username, itemId, qty], (err, result) => {
     if (err) {
       console.log("Error In Registration: " + err)
     } else {
@@ -217,6 +217,20 @@ app.get("/get-user-accounts", (req, res) => {
     res.json({ message: "Sucess", data: result })
   })
 })
+app.post("/get-order", (req, res) => {
+  const { username } = req.body
+  // console.log("inisde get order")
+  // console.log(username)
+  // const responce = authantication(token, admin_secret_key, req)
+  // if (responce.message != "Sucess") {
+  //   res.status(401).json(responce)
+  // }
+  const sql = "SELECT * FROM orders WHERE username=?"
+  db.query(sql, [username], (error, result) => {
+    if (error) throw error
+    res.json({ message: "Sucess", data: result })
+  })
+})
 
 app.post("/update-user-type", async (req, res) => {
   const { token, id } = req.body
@@ -247,7 +261,7 @@ app.post("/update-admin-type", async (req, res) => {
   res.json({ message: "Sucess" })
 })
 app.post("/insertItems", upload.single("image"), async (req, res) => {
-  const { token, name, catagory, qty, realRate, discription, edition } = req.body
+  const { token, name, catagory, qty, realRate, discription, edition, auther } = req.body
   const { filename } = req.file
   // console.log(token)
   // console.log(name)
@@ -261,19 +275,19 @@ app.post("/insertItems", upload.single("image"), async (req, res) => {
     res.status(401).json(responce)
   }
 
-  const sql = "INSERT INTO items (name, catagory, qty, rate, discription, imgae , edition) VALUES (?,?,?,?,?,?,?)"
-  db.query(sql, [name, catagory, qty, realRate, discription, filename, edition], (err, result) => {
+  const sql = "INSERT INTO items (name, catagory, qty, rate, discription, image , edition,auther) VALUES (?,?,?,?,?,?,?,?)"
+  db.query(sql, [name, catagory, qty, realRate, discription, filename, edition, auther], (err, result) => {
     if (err) {
       console.log("Error In Registration: " + err)
       res.status(403).json({ message: "Token-Sucess db-error" })
     } else {
-      // const sql = "SELECT * FROM items"
-      // db.query(sql, [], (err, result) => {
-      //   if (err) {
-      //   } else {
-      //     res.json({ message: "Sucess", data: result })
-      //   }
-      // })
+      const sql = "SELECT * FROM items"
+      db.query(sql, [], (err, result) => {
+        if (err) {
+        } else {
+          res.json({ message: "Sucess", data: result })
+        }
+      })
     }
   })
 })

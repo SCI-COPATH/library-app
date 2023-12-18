@@ -1,13 +1,19 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import DispachContext from "../../DispachContext"
 import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
+import StateContext from "../../StateContext"
 
 function Header() {
+  const navigater = useNavigate()
   const appDispach = useContext(DispachContext)
+  const appState = useContext(StateContext)
+
+  console.log(appState.user.usertype)
   function handilLogout() {
     appDispach({ type: "logout" })
     appDispach({ type: "flashMessage", value: "Logout Sucesfully" })
+    navigater("/")
   }
   return (
     <>
@@ -24,19 +30,20 @@ function Header() {
           <div id="navbarCollapse" className="collapse navbar-collapse justify-content-end">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to="/" className="nav-link active">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to="" className="nav-link active">
                   Profile
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="" className="nav-link active">
-                  About
-                </Link>
+                {appState.user.usertype == "user" ? (
+                  <Link to="/order" className="nav-link active">
+                    Orders
+                  </Link>
+                ) : (
+                  <Link to="" className="nav-link active">
+                    updates
+                  </Link>
+                )}
               </li>
               <li className="nav-item">
                 <button className="nav-link active" onClick={handilLogout}>

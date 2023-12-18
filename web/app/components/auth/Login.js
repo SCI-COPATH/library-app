@@ -14,8 +14,11 @@ function Login() {
       // console.log(responce.data.user)
       const itemList = await axios.get("/product-list")
       // console.log(itemList.data.data)
+      const order = await axios.post("/get-order", { username })
+      console.log(order.data.data)
       let msg = `Welcome ${responce.data.user.fullname}`
-      appDispach({ type: "login", data: responce.data.user, items: itemList.data.data })
+
+      appDispach({ type: "login", data: responce.data.user, items: itemList.data.data, order: order.data.data })
       appDispach({ type: "flashMessage", value: msg })
     } catch (error) {
       console.log("error" + error)
