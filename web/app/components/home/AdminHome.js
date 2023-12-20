@@ -47,7 +47,7 @@ function AdminHome() {
 
   return (
     <>
-      <h3>Hello {appState.user.username} 👋</h3>
+      <h3>Hello {appState.user.name} 👋</h3>
       <div className="d-flex justify-content-between">
         <div className="p-2 m-2 w-50">
           <h4>Update Product Status </h4>

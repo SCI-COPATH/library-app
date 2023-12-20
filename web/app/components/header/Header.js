@@ -30,8 +30,13 @@ function Header() {
           <div id="navbarCollapse" className="collapse navbar-collapse justify-content-end">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
+                <Link to="/" className="nav-link active">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="" className="nav-link active">
-                  Profile
+                  profile
                 </Link>
               </li>
               <li className="nav-item">

@@ -21,7 +21,7 @@ function Login() {
         order = await axios.post("/get-all-order")
       }
       // console.log(order.data.data)
-      let msg = `Welcome ${responce.data.user.fullname}`
+      let msg = `Welcome ${responce.data.user.name}`
 
       appDispach({ type: "login", data: responce.data.user, items: itemList.data.data, order: order.data.data })
       appDispach({ type: "flashMessage", value: msg })

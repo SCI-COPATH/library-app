@@ -341,7 +341,7 @@ app.post("/register", async (req, res) => {
         message: "Registration successful",
         user: {
           username: username,
-          fullname: fullname,
+          name: fullname,
           token: token,
           avatar: getAvatar(email),
           usertype: usertype,
@@ -393,7 +393,7 @@ app.post("/login", async (req, res) => {
             token: token,
             avatar: getAvatar(result[0].email),
             usertype: result[0].usertype,
-            fullname: result[0].fullname,
+            name: result[0].fullname,
           },
           // items: resData,
         })

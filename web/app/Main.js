@@ -37,6 +37,7 @@ function Main() {
       username: localStorage.getItem("username"),
       avatar: localStorage.getItem("avatar"),
       usertype: localStorage.getItem("usertype"),
+      name: localStorage.getItem("name"),
     },
     order: tempOrder,
     items: tempItem,
@@ -77,6 +78,7 @@ function Main() {
       localStorage.setItem("username", state.user.username)
       localStorage.setItem("avatar", state.user.avatar)
       localStorage.setItem("usertype", state.user.usertype)
+      localStorage.setItem("name", state.user.name)
       localStorage.setItem("items", JSON.stringify(state.items))
       localStorage.setItem("order", JSON.stringify(state.order))
     } else {
@@ -84,6 +86,7 @@ function Main() {
       localStorage.removeItem("username")
       localStorage.removeItem("avatar")
       localStorage.removeItem("usertype")
+      localStorage.removeItem("name")
       localStorage.removeItem("items")
       localStorage.removeItem("select")
       localStorage.removeItem("order")

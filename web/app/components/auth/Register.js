@@ -17,9 +17,18 @@ function Register() {
     e.preventDefault()
     try {
       const responce = await axios.post("/register", { fullname, username, email, phone, password, usertype: "user" })
-      console.log(responce.data.user)
-      appDispach({ type: "login", data: responce.data.user })
-      appDispach({ type: "flashMessage", value: "Your Account Secusfully Registerd " })
+      // console.log(responce.data.user)
+      const itemList = await axios.get("/product-list")
+      // console.log(itemList.data.data)
+
+      let order = await axios.post("/get-order", { username })
+
+      // console.log(order.data.data)
+      let msg = `Welcome ${responce.data.user.name}`
+
+      appDispach({ type: "login", data: responce.data.user, items: itemList.data.data, order: order.data.data })
+
+      appDispach({ type: "flashMessage", value: msg })
       navigate("/")
     } catch (error) {
       console.log("Register Server error" + error)

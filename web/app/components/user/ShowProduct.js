@@ -7,12 +7,19 @@ function ShowProduct(props) {
   const appStatus = useContext(StateContext)
   const appDispach = useContext(DispachContext)
   const nvatigate = useNavigate()
-  let current = props.select == "All" ? appStatus.items : appStatus.items.filter((x) => x.catagory == props.select)
+  let currentDEPT = props.select == "All" ? appStatus.items : appStatus.items.filter((x) => x.catagory == props.select)
+  // console.log("strat")
+  // console.log(currentDEPT)
+  // console.log(props.auther)
+
+  let current = props.auther == "All" ? currentDEPT : currentDEPT.filter((x) => x.auther == props.auther)
+  // console.log(current)
   current = current.filter((x) => x.qty > 0)
-  console.log(current)
+  // console.log(current)
+  // console.log("end")
   function handileBuy(e) {
     e.preventDefault()
-    console.log(appStatus.select)
+    // console.log(appStatus.select)
     nvatigate("/view-product")
   }
   return (
