@@ -231,7 +231,19 @@ app.post("/get-order", (req, res) => {
     res.json({ message: "Sucess", data: result })
   })
 })
-
+app.post("/get-all-order", (req, res) => {
+  // console.log("inisde get order")
+  // console.log(username)
+  // const responce = authantication(token, admin_secret_key, req)
+  // if (responce.message != "Sucess") {
+  //   res.status(401).json(responce)
+  // }
+  const sql = "SELECT * FROM orders "
+  db.query(sql, (error, result) => {
+    if (error) throw error
+    res.json({ message: "Sucess", data: result })
+  })
+})
 app.post("/update-user-type", async (req, res) => {
   const { token, id } = req.body
   console.log(token)

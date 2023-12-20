@@ -19,6 +19,7 @@ function Order() {
     <>
       <Header />
       <Page title="My Orders" wide={true}>
+        <h3>Orders</h3>
         <div className="row justify-content-between">
           {appState.order.map((order) => {
             return (

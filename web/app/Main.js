@@ -99,6 +99,9 @@ function Main() {
   useEffect(() => {
     localStorage.setItem("order", JSON.stringify(state.order))
   }, [state.order])
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(state.items))
+  }, [state.items])
   return (
     <StateContext.Provider value={state}>
       <DispachContext.Provider value={dispatch}>
