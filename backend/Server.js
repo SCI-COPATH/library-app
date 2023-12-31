@@ -162,14 +162,14 @@ app.post("/update-items-qty", async (req, res) => {
   })
 })
 app.post("/place-order", async (req, res) => {
-  const { itemId, qty, username } = req.body
+  const { itemId, qty, username, addressID } = req.body
 
   console.log(username)
   console.log(qty)
   //Hash the Password
 
-  const sql = "INSERT INTO orders (username, itemId,qty, status) VALUES (?, ? ,? , 'Not yet ship')"
-  db.query(sql, [username, itemId, qty], (err, result) => {
+  const sql = "INSERT INTO orders (username, itemId,qty, status,address_id) VALUES (?, ? ,? , 'Not yet ship',?)"
+  db.query(sql, [username, itemId, qty, addressID], (err, result) => {
     if (err) {
       console.log("Error In Registration: " + err)
     } else {
@@ -240,6 +240,31 @@ app.post("/get-all-order", (req, res) => {
   // }
   const sql = "SELECT * FROM orders "
   db.query(sql, (error, result) => {
+    if (error) throw error
+    res.json({ message: "Sucess", data: result })
+  })
+})
+app.post("/insert-address", async (req, res) => {
+  const { name, line1, line2, username, City, pincode, phone_number } = req.body
+  const sql = "INSERT INTO address (name, line1, line2,username,City,pincode,phone_number) VALUES (?, ? ,? , ?,?,?,?)"
+  db.query(sql, [name, line1, line2, username, City, pincode, phone_number], (err, result) => {
+    if (err) {
+      console.log("Error In Registration: " + err)
+    } else {
+      res.json({ message: "sucess" })
+    }
+  })
+})
+app.post("/get-address", (req, res) => {
+  const { username } = req.body
+  // console.log("inisde get order")
+  // console.log(username)
+  // const responce = authantication(token, admin_secret_key, req)
+  // if (responce.message != "Sucess") {
+  //   res.status(401).json(responce)
+  // }
+  const sql = "SELECT * FROM address WHERE username=?"
+  db.query(sql, [username], (error, result) => {
     if (error) throw error
     res.json({ message: "Sucess", data: result })
   })

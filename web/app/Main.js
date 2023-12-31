@@ -18,7 +18,7 @@ import ViewSingleElement from "./components/user/ViewSingleElement"
 import Order from "./components/user/Order"
 
 function Main() {
-  let tempItem, tempOrder
+  let tempItem, tempOrder, tempAddress
   try {
     tempItem = JSON.parse(localStorage.getItem("items"))
   } catch (error) {
@@ -28,6 +28,11 @@ function Main() {
     tempOrder = JSON.parse(localStorage.getItem("order"))
   } catch (error) {
     tempOrder = ""
+  }
+  try {
+    tempAddress = JSON.parse(localStorage.getItem("address"))
+  } catch (error) {
+    tempAddress = ""
   }
   const initialStage = {
     loggedIn: Boolean(localStorage.getItem("token")),
@@ -42,6 +47,11 @@ function Main() {
     order: tempOrder,
     items: tempItem,
     select: localStorage.getItem("select"),
+    address: tempAddress,
+    placeOrder: {
+      qty: "",
+      status: false,
+    },
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -50,9 +60,13 @@ function Main() {
         draft.user = action.data
         draft.items = action.items
         draft.order = action.order
+        draft.address = action.address
         return
       case "order":
         draft.order = action.order
+        return
+      case "address":
+        draft.address = action.address
         return
       case "update-product-list":
         draft.items = action.items
@@ -65,6 +79,12 @@ function Main() {
         return
       case "set-select":
         draft.select = action.select
+        return
+      case "place-order":
+        draft.placeOrder = action.placeOrder
+        return
+      case "reset-buy-status":
+        draft.placeOrder.status = false
         return
     }
   }
@@ -81,6 +101,7 @@ function Main() {
       localStorage.setItem("name", state.user.name)
       localStorage.setItem("items", JSON.stringify(state.items))
       localStorage.setItem("order", JSON.stringify(state.order))
+      localStorage.setItem("address", JSON.stringify(state.address))
     } else {
       localStorage.removeItem("token")
       localStorage.removeItem("username")
@@ -90,6 +111,7 @@ function Main() {
       localStorage.removeItem("items")
       localStorage.removeItem("select")
       localStorage.removeItem("order")
+      localStorage.removeItem("address")
     }
   }, [state.loggedIn])
   useEffect(() => {
@@ -99,6 +121,9 @@ function Main() {
       localStorage.removeItem("select")
     }
   }, [state.select])
+  useEffect(() => {
+    localStorage.setItem("address", JSON.stringify(state.address))
+  }, [state.address])
   useEffect(() => {
     localStorage.setItem("order", JSON.stringify(state.order))
   }, [state.order])

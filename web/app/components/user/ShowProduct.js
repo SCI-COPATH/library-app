@@ -19,6 +19,7 @@ function ShowProduct(props) {
   // console.log("end")
   function handileBuy(e) {
     e.preventDefault()
+    appDispach({ type: "reset-buy-status" })
     // console.log(appStatus.select)
     nvatigate("/view-product")
   }

@@ -22,8 +22,9 @@ function Login() {
       }
       // console.log(order.data.data)
       let msg = `Welcome ${responce.data.user.name}`
-
-      appDispach({ type: "login", data: responce.data.user, items: itemList.data.data, order: order.data.data })
+      const address = await axios.post("/get-address", { username })
+      // console.log(address)
+      appDispach({ type: "login", data: responce.data.user, items: itemList.data.data, order: order.data.data, address: address.data.data })
       appDispach({ type: "flashMessage", value: msg })
     } catch (error) {
       console.log("error" + error)
