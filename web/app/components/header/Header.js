@@ -35,7 +35,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="" className="nav-link active">
+                <Link to="/profile" className="nav-link active">
                   profile
                 </Link>
               </li>

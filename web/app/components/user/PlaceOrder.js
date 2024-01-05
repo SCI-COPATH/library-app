@@ -83,9 +83,7 @@ function PlaceOrder() {
           )
         })}
         <div>
-          {/* <button type="submit" className="btn btn-dark my-3">
-            Add Address
-          </button> */}
+        
           <button type="button" className="btn btn-dark my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Add Address
           </button>
@@ -156,26 +154,7 @@ function PlaceOrder() {
         </button>
       </form>
 
-      {/* <ul className="list-group">
-        {appState.address.map((x) => {
-          return (
-            <li
-              className="list-group-item"
-              key={x.id}
-              id={x.id}
-              onClick={(e) => {
-                setAddressId(x.id)
-              }}
-            >
-              <strong>{x.name}</strong>
-              <div>{x.phone_number}</div>
-              <div>{x.line1}</div>
-              <div>{x.line2}</div>
-              <span>{x.City}</span> <span>{x.pincode}</span>
-            </li>
-          )
-        })}
-      </ul> */}
+      
     </>
   )
 }

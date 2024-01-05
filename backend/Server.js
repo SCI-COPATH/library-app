@@ -120,35 +120,19 @@ app.get("/product-list", (req, res) => {
     }
   })
 })
-app.get("/address", (req, res) => {
-  const { userId } = req.body
-  const sql = "SELECT * FROM address WHERE address.userId = ?"
+// app.get("/address", (req, res) => {
+//   const { userId } = req.body
+//   const sql = "SELECT * FROM address WHERE address.userId = ?"
 
-  db.query(sql, [userId], (err, result) => {
-    if (err) {
-      console.log("Error Searching for userId: " + err)
-      res.status(404).json({ message: "No username found" })
-    } else {
-      res.json({ message: "Sucess", data: result })
-    }
-  })
-})
-
-app.post("/add-address", async (req, res) => {
-  const { userId, address } = req.body
-  console.log(userId)
-  console.log(address)
-  // const sql = "INSERT INTO address (userId, address) VALUES (?,?)"
-
-  // db.query(sql, [userId, address], (err, result) => {
-  //   if (err) {
-  //     console.log("Error Searching for userId: " + err)
-  //     res.status(404).json({ message: "No username found" })
-  //   } else {
-  //     res.json({ message: "Sucess", data: result })
-  //   }
-  // })
-})
+//   db.query(sql, [userId], (err, result) => {
+//     if (err) {
+//       console.log("Error Searching for userId: " + err)
+//       res.status(404).json({ message: "No username found" })
+//     } else {
+//       res.json({ message: "Sucess", data: result })
+//     }
+//   })
+// })
 
 app.post("/update-items-qty", async (req, res) => {
   const { id, qty } = req.body
@@ -269,6 +253,16 @@ app.post("/get-address", (req, res) => {
     res.json({ message: "Sucess", data: result })
   })
 })
+app.post("/update-address", async (req, res) => {
+  const { name, line1, line2, city, pincode, phone, id } = req.body
+  const query = `UPDATE address SET name = ?, line1 = ? , line2 = ?  ,City = ?,pincode = ? ,phone_number =?   WHERE address.id= ?`
+  console.log(query)
+  db.query(query, [name, line1, line2, city, pincode, phone, id], async (err, resu) => {
+    if (err) throw err
+    res.json({ message: "Sucess" })
+  })
+})
+
 app.post("/update-user-type", async (req, res) => {
   const { token, id } = req.body
   console.log(token)
@@ -370,6 +364,8 @@ app.post("/register", async (req, res) => {
           token: token,
           avatar: getAvatar(email),
           usertype: usertype,
+          email: result[0].email,
+          phone: result[0].phone,
         },
       })
     }
@@ -419,6 +415,8 @@ app.post("/login", async (req, res) => {
             avatar: getAvatar(result[0].email),
             usertype: result[0].usertype,
             name: result[0].fullname,
+            email: result[0].email,
+            phone: result[0].phone,
           },
           // items: resData,
         })
@@ -453,6 +451,15 @@ app.get("/products", (req, res) => {
   })
 })
 
+app.post("/update-user-data", async (req, res) => {
+  const { name, email, phone, username } = req.body
+  const query = `UPDATE users SET fullname= ? , email= ? , phone= ?  WHERE users.username= ?`
+  console.log(query)
+  db.query(query, [name, email, phone, username], async (err, resu) => {
+    if (err) throw err
+    res.json({ message: "Sucess" })
+  })
+})
 app.listen(port, () => {
   console.log("Server is running ✌🏾")
 })

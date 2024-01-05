@@ -16,6 +16,7 @@ import Login from "./components/auth/Login"
 import InsertBook from "./components/admin/InsertBook"
 import ViewSingleElement from "./components/user/ViewSingleElement"
 import Order from "./components/user/Order"
+import Profile from "./components/profile/Profile"
 
 function Main() {
   let tempItem, tempOrder, tempAddress
@@ -43,6 +44,8 @@ function Main() {
       avatar: localStorage.getItem("avatar"),
       usertype: localStorage.getItem("usertype"),
       name: localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
     },
     order: tempOrder,
     items: tempItem,
@@ -86,6 +89,11 @@ function Main() {
       case "reset-buy-status":
         draft.placeOrder.status = false
         return
+      case "update-user-data":
+        draft.user.name = action.name
+        draft.user.phone = action.phone
+        draft.user.email = action.email
+        return
     }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialStage)
@@ -99,6 +107,8 @@ function Main() {
       localStorage.setItem("avatar", state.user.avatar)
       localStorage.setItem("usertype", state.user.usertype)
       localStorage.setItem("name", state.user.name)
+      localStorage.setItem("email", state.user.email)
+      localStorage.setItem("phone", state.user.phone)
       localStorage.setItem("items", JSON.stringify(state.items))
       localStorage.setItem("order", JSON.stringify(state.order))
       localStorage.setItem("address", JSON.stringify(state.address))
@@ -112,6 +122,8 @@ function Main() {
       localStorage.removeItem("select")
       localStorage.removeItem("order")
       localStorage.removeItem("address")
+      localStorage.removeItem("email")
+      localStorage.removeItem("phone")
     }
   }, [state.loggedIn])
   useEffect(() => {
@@ -130,6 +142,11 @@ function Main() {
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(state.items))
   }, [state.items])
+  useEffect(() => {
+    localStorage.setItem("name", state.user.name)
+    localStorage.setItem("email", state.user.email)
+    localStorage.setItem("phone", state.user.phone)
+  }, [state.user])
   return (
     <StateContext.Provider value={state}>
       <DispachContext.Provider value={dispatch}>
@@ -141,6 +158,7 @@ function Main() {
             <Route path="/InsertBook" element={<InsertBook />} />
             <Route path="/view-product" element={<ViewSingleElement />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </DispachContext.Provider>
