@@ -17,6 +17,7 @@ import InsertBook from "./components/admin/InsertBook"
 import ViewSingleElement from "./components/user/ViewSingleElement"
 import Order from "./components/user/Order"
 import Profile from "./components/profile/Profile"
+import UpdateStatus from "./components/admin/Update-status"
 
 function Main() {
   let tempItem, tempOrder, tempAddress
@@ -38,6 +39,7 @@ function Main() {
   const initialStage = {
     loggedIn: Boolean(localStorage.getItem("token")),
     flashMessages: [],
+    search: "",
     user: {
       token: localStorage.getItem("token"),
       username: localStorage.getItem("username"),
@@ -88,6 +90,9 @@ function Main() {
         return
       case "reset-buy-status":
         draft.placeOrder.status = false
+        return
+      case "search":
+        draft.search = action.value
         return
       case "update-user-data":
         draft.user.name = action.name
@@ -159,6 +164,7 @@ function Main() {
             <Route path="/view-product" element={<ViewSingleElement />} />
             <Route path="/order" element={<Order />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/update-status" element={<UpdateStatus />} />
           </Routes>
         </BrowserRouter>
       </DispachContext.Provider>
@@ -169,6 +175,6 @@ function Main() {
 const root = ReactDOM.createRoot(document.querySelector("#app"))
 root.render(<Main />)
 
-if (module.hot) {
-  module.hot.accept()
-}
+  if (module.hot) {
+    module.hot.accept()
+  }

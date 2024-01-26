@@ -17,7 +17,7 @@ function Register() {
     e.preventDefault()
     try {
       const responce = await axios.post("/register", { fullname, username, email, phone, password, usertype: "user" })
-      // console.log(responce.data.user)
+      // console.log(responce.data)
       const itemList = await axios.get("/product-list")
       // console.log(itemList.data.data)
 

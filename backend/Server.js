@@ -330,18 +330,19 @@ function getAvatar(mail) {
 app.get("/", (req, res) => {
   return res.json("Server is Redy to run")
 })
+
 //Registration Endpoint
 app.post("/register", async (req, res) => {
   const { fullname, username, email, phone, password, usertype } = req.body
-  console.log(fullname)
-  console.log(username)
-  console.log(email)
-  console.log(phone)
-  console.log(password)
+  // console.log(fullname)
+  // console.log(username)
+  // console.log(email)
+  // console.log(phone)
+  // console.log(password)
   //Hash the Password
   const hashedPassword = await bcrypt.hash(password, 10)
-  console.log(hashedPassword)
-  console.log(hashedPassword.length)
+  // console.log(hashedPassword)
+  // console.log(hashedPassword.length)
 
   const sql = "INSERT INTO users (fullname, username, email, phone, password, usertype ) VALUES (?, ?, ?, ? ,?,?)"
   db.query(sql, [fullname, username, email, phone, hashedPassword, usertype], (err, result) => {
@@ -355,7 +356,7 @@ app.post("/register", async (req, res) => {
       } else {
         token = jwt.sign({ userId: username }, admin_secret_key, { expiresIn: "1h" })
       }
-      console.log(token)
+      // console.log(token)
       res.json({
         message: "Registration successful",
         user: {
@@ -364,8 +365,8 @@ app.post("/register", async (req, res) => {
           token: token,
           avatar: getAvatar(email),
           usertype: usertype,
-          email: result[0].email,
-          phone: result[0].phone,
+          email: email,
+          phone: phone,
         },
       })
     }

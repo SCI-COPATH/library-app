@@ -15,6 +15,14 @@ function ShowProduct(props) {
   let current = props.auther == "All" ? currentDEPT : currentDEPT.filter((x) => x.auther == props.auther)
   // console.log(current)
   current = current.filter((x) => x.qty > 0)
+
+  if (appStatus.search != "") {
+    current = current.filter((x) => {
+      let temp = x.name.toLowerCase()
+      return temp.includes(appStatus.search.toLowerCase())
+    })
+  }
+
   // console.log(current)
   // console.log("end")
   function handileBuy(e) {
